@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2013 yvt
+ Copyright (c) 2021 yvt
 
  This file is part of OpenSpades.
 
@@ -18,4 +18,21 @@
 
  */
 
-#include "Deque.h"
+attribute vec2 positionAttribute;
+attribute vec4 colorAttribute;
+
+uniform mat4 viewProjectionMatrixInv;
+
+varying vec2 texCoord;
+varying vec4 viewcentricWorldPositionPartial;
+
+void main() {
+	vec2 pos = positionAttribute;
+
+	vec2 scrPos = pos * 2. - 1.;
+	gl_Position = vec4(scrPos, 0.5, 1.);
+
+	texCoord = pos;
+
+	viewcentricWorldPositionPartial = viewProjectionMatrixInv * vec4(pos, 0.0, 1.0);
+}
